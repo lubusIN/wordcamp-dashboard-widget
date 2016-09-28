@@ -27,7 +27,7 @@ If you have any suggestions/Feature request that you would like to see in the up
 **Installation**
 ----------------
 
-***From your WordPress dashboard***
+***From your WordPress dashboard (Pending approval kindly use manual installtion) ***
  1. Visit 'Plugins > Add New' 
  2. Search for 'Wordcamp Dashboard Widget'  or upload zip file
  3. Activate "Wordcamp Dashboard Widget" from your Plugins page
