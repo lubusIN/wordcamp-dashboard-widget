@@ -1,16 +1,18 @@
-**Wordcamp Dashboard Widget**
--------------------------
+=== Plugin Name ===
+Contributors: lubus,ajitbohra
+Donate link: http://www.lubus.in
+Tags: wordcamp, widget, dashboard
+Requires at least: 3.0.1
+Tested up to:  4.6.1
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
 Display upcoming wordcamps on your wp-admin dashboard
 
+== Description ==
 >**Note:** This initial release v0.1 is written quickly in few odd hours, will be rewritten as the plugin progresses. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
 
-----------
-
-**Screenshot**
-
-----------
-
-**About**
 Created this plugin out of personal need to have quick access to list of upcoming wordcamps right from the wp-admin.  Plugin displays a widget on dashboard containing the list of upcoming wordcamps with options to search, sort & navigate through list along with direct link to respective wordcamp website. Data is fetched using JSON API from https://central.wordcamp.org/wp-json/posts?type=wordcamp. Data is fetched and stored in transient for better performance,   transient  is refreshed every day to reflect new data.
 
 ----------
@@ -26,11 +28,7 @@ Created this plugin out of personal need to have quick access to list of upcomin
 
 If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusonline/wordcamp-dashboard-widget/issues) 
 
-----------
-
-**Installation**
-----------------
-
+== Installation ==
 ***From your WordPress dashboard***
  1. Visit 'Plugins > Add New' 
  2. Search for 'Wordcamp Dashboard Widget'  or upload zip file
@@ -41,10 +39,12 @@ If you have any suggestions/Feature request that you would like to see in the up
  2. Upload the 'wordcamp-dashboard-widget' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
  3. Activate "Wordcamp Dashboard Widget" from your Plugins page. 
 
-----------
+== Screenshots ==
 
-**Change Log**
---------------
+1. /assets/screenshot-1.png
+
+== Changelog ==
+
 ***v0.1*** 
 Released on 28th September 2016
 

@@ -1,0 +1,23 @@
+#lubus-wordcamp{
+	border: 1px solid #e5e5e5;
+}
+
+.dataTables_length,
+.dataTables_filter{
+    margin-bottom: 10px;
+}
+
+table.dataTable thead th, 
+table.dataTable tfoot th{
+	font-weight: 600
+}
+
+#lubus-wordcamp th#date{
+	width: 55px;
+}
+
+table.dataTable.no-footer,
+table.dataTable thead th, 
+table.dataTable thead td{
+	border-bottom: 1px solid #e5e5e5;
+}
