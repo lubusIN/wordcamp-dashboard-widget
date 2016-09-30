@@ -11,14 +11,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Display upcoming wordcamps on your wp-admin dashboard
 
 == Description ==
->**Note:** This initial release v0.1 is written quickly in few odd hours, will be rewritten as the plugin progresses. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
+>**Disclaimer:** This initial release v0.1 is written quickly in few odd hours, will be rewritten as the plugin progresses. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
 
-Created this plugin out of personal need to have quick access to list of upcoming wordcamps right from the wp-admin.  Plugin displays a widget on dashboard containing the list of upcoming wordcamps with options to search, sort & navigate through list along with direct link to respective wordcamp website. Data is fetched using JSON API from https://central.wordcamp.org/wp-json/posts?type=wordcamp. Data is fetched and stored in transient for better performance,   transient  is refreshed every day to reflect new data.
+We have created this plugin out of personal need to have quick access to list of upcoming wordcamps right from the wp-admin. Plugin displays a widget on dashboard containing the list of upcoming wordcamps with options to search, sort & navigate through list along with direct link to respective wordcamp website. Data is fetched using JSON API (from https://central.wordcamp.org/wp-json/posts?type=wordcamp) and stored in transient for better performance, which is refreshed every day to reflect new data.
 
 ----------
 
 **Features coming in v1.0**
-
  1. Option to refresh data
  2. Re-write plugin code
  2. Improve data fetching
