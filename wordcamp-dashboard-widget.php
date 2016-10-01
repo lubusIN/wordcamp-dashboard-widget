@@ -45,13 +45,13 @@ register_deactivation_hook( __FILE__, 'lubus_wdw_deactivate' );
 /**
  * Enqueue styles
  */
-wp_enqueue_style( "css-datatables", 'https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css', array(), "1.0", 'all' );
+wp_enqueue_style( "css-datatables", plugin_dir_url( __FILE__ ) . 'assets/css/jquery.dataTables.min.css', array(), "1.0", 'all' );
 wp_enqueue_style( "css-style", plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), "1.0", 'all' );
 
 /**
  * Enqueue styles
  */
-wp_enqueue_script( "js-datatables", 'https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js', array( 'jquery' ), "1.0", false );
+wp_enqueue_script( "js-datatables", plugin_dir_url( __FILE__ ) . 'assets/js/jquery.dataTables.min.js', array( 'jquery' ), "1.0", false );
 wp_enqueue_script( "js-script", plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array( 'jquery','js-datatables' ), "1.0", false );
 
 /**
