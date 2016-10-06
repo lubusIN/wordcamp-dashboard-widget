@@ -38,6 +38,15 @@ If you have any suggestions/Feature request that you would like to see in the up
 
 **Change Log**
 --------------
+***v0.1.1***
+
+Released on 6th October 2016
+
+ - Functions renamed to be unique (as suggested by wordpress.org plugin review)
+ - Datatables jquery plugin included locally to remove dependency (as suggested by wordpress.org plugin review)
+ - wordpress.org plugin page assets removed
+ - Readme updated
+ 
 ***v0.1***
 
 Released on 28th September 2016
