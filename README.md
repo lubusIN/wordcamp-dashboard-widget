@@ -32,7 +32,7 @@ If you have any suggestions/Feature request that you would like to see in the up
  3. Activate "Wordcamp Dashboard Widget" from your Plugins page
 
 ***Manual Installation*** 
- 1. Download "Wordcamp Dashboard Widget".
+ 1. [Download](https://wordpress.org/plugins/wc-dashboard-widget/) "Wordcamp Dashboard Widget".
  2. Upload the 'wordcamp-dashboard-widget' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
  3. Activate "Wordcamp Dashboard Widget" from your Plugins page. 
 
