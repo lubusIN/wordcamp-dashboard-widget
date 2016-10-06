@@ -2,6 +2,10 @@
 	border: 1px solid #e5e5e5;
 }
 
+#lubus_wdw_error{
+	padding: 1px 10px;
+}
+
 .dataTables_length,
 .dataTables_filter{
     margin-bottom: 10px;

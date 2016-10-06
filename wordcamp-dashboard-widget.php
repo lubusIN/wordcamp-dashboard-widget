@@ -74,42 +74,51 @@ add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
 
 function lubus_wdw_upcoming_wordcamp() {
 	$upcoming_wordcamps = lubus_wdw_get_wordcamp_data();
+	if($upcoming_wordcamps){
 ?>
-    <table id="lubus-wordcamp" class="display">
-	<thead>
-		<tr>
-			<th scope="col" class="column-primary">Event</th>
-			<th id="date" scope="col">Date</th>
-			<th scope="col">Location</th>
-		</tr>
-	</thead>
-	<tbody>
-	    <?php
-		foreach($upcoming_wordcamps as $key => $value)
-		{
-			$timestamp = lubus_wdw_get_meta($value['post_meta'],"Start Date (YYYY-mm-dd)");
-			?>
+	    <table id="lubus-wordcamp" class="display">
+		<thead>
 			<tr>
-				<td class="column-primary" data-colname="Event">
-					<a href="<?php echo lubus_wdw_get_meta($value['post_meta'],"URL") ?>" target="_new">
-						<?php echo $value['title']; ?>
-					</a>
-				</td>
-				<td data-colname="Date">
-					<?php 
-						echo date("d-m-Y", $timestamp);
-					?>
-				</td>
-				<td data-colname="Location">
-					<?php echo lubus_wdw_get_meta($value['post_meta'],"Location"); ?>
-				</td>
+				<th scope="col" class="column-primary">Event</th>
+				<th id="date" scope="col">Date</th>
+				<th scope="col">Location</th>
 			</tr>
-			<?php
-		}
-		?>
-		</tbody>
-	</table>
+		</thead>
+		<tbody>
+		    <?php
+			foreach($upcoming_wordcamps as $key => $value)
+			{
+				$timestamp = lubus_wdw_get_meta($value['post_meta'],"Start Date (YYYY-mm-dd)");
+				?>
+				<tr>
+					<td class="column-primary" data-colname="Event">
+						<a href="<?php echo lubus_wdw_get_meta($value['post_meta'],"URL") ?>" target="_new">
+							<?php echo $value['title']; ?>
+						</a>
+					</td>
+					<td data-colname="Date">
+						<?php 
+							echo date("d-m-Y", $timestamp);
+						?>
+					</td>
+					<td data-colname="Location">
+						<?php echo lubus_wdw_get_meta($value['post_meta'],"Location"); ?>
+					</td>
+				</tr>
+				<?php
+			}
+			?>
+			</tbody>
+		</table>
 	<?php
+	} else {
+	?>
+		<div class="wp-ui-notification" id="lubus_wdw_error">
+			<p><span class="dashicons dashicons-dismiss"></span> Unable to connect to wordcamp API try again later ... !</p>
+		</div>
+		<p class="wp-ui-text-notification">If error persist <a href="https://github.com/lubusonline/wordcamp-dashboard-widget/issues/new" target="_new">click here</a> to create issue on github</p>
+	<?php
+	}
 }
 
 
@@ -117,31 +126,34 @@ function lubus_wdw_upcoming_wordcamp() {
  * Get Wordcamp Data
  */
 function lubus_wdw_get_wordcamp_data(){
-	  //delete_transient(lubus_wordcamp_JSON_data);
 	  $transient = get_transient( 'lubus_wdw_wordcamp_JSON' );
 	  if( ! empty( $transient ) ) {
 		    return json_decode($transient,true);
 	  } else {
-  		// Get json data & filterit:
-		$api_url = 'https://central.wordcamp.org/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
-	    $out = wp_remote_get( $api_url);  // Call the API.
-	    $parsed_json = json_decode($out['body'], true);
-	    $upcoming_wordcamps = array();
+	  		$api_url = 'https://central.wordcamp.org/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
+			$out = wp_remote_get( $api_url);  // Call the API.
 
-	    // Create New JSON from filtered data
-		foreach($parsed_json as $key => $value)
-		{
-			$wordcamp_date = lubus_wdw_get_meta($value['post_meta'],"Start Date (YYYY-mm-dd)");
-			$today = date("Y-m-d");
+	  		if (lubus_wdw_check_response($out)) { 		
+		  		// Get json data & filterit:
+			    $parsed_json = json_decode($out['body'], true);
+			    $upcoming_wordcamps = array();
 
-			// Create new JSON
-			if (date("Y-m-d",$wordcamp_date) >= $today) {
-				$upcoming_wordcamps[] = $value;
-				$upcoming_wordcamps = $upcoming_wordcamps;
+			    // Create New JSON from filtered data
+				foreach($parsed_json as $key => $value)
+				{
+					$wordcamp_date = lubus_wdw_get_meta($value['post_meta'],"Start Date (YYYY-mm-dd)");
+					$today = date("Y-m-d");
+
+					// Create new JSON
+					if (date("Y-m-d",$wordcamp_date) >= $today) {
+						$upcoming_wordcamps[] = $value;
+						$upcoming_wordcamps = $upcoming_wordcamps;
+					}
+				}
+				 set_transient( 'lubus_wdw_wordcamp_JSON',json_encode($upcoming_wordcamps), DAY_IN_SECONDS );
+				 return $upcoming_wordcamps;
 			}
-		}
-		 set_transient( 'lubus_wdw_wordcamp_JSON',json_encode($upcoming_wordcamps), DAY_IN_SECONDS );
-		 return $upcoming_wordcamps;
+			return false;
 	  }
 }
 
@@ -166,7 +178,7 @@ function lubus_wdw_check_response( $response ) {
   if( is_wp_error( $response ) ) { return FALSE; } // Is the response a wp error?
   if( ! isset( $response['response'] ) ) { return FALSE; } // Is the response weird?
   if( ! isset( $response['response']['code'] ) ) { return FALSE; }   // Is there a status code?
-  if( in_array( $response['response']['code'], lubus_bad_status_codes() ) ) { return FALSE; }   // Is the status code bad?
+  if( in_array( $response['response']['code'], lubus_wdw_bad_status_codes() ) ) { return FALSE; }   // Is the status code bad?
   
   return $response['response']['code'];  // We made it!  Return the status code, just for posterity's sake.
 }
