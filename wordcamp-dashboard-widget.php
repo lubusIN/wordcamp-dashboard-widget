@@ -133,12 +133,11 @@ function lubus_wdw_display_wordcamps() {
  * Get Wordcamp Data
  */
 function lubus_wdw_get_wordcamp_data(){
-	  delete_transient("lubus_wdw_wordcamp_JSON"); // Remove transient data for plugin
 	  $transient = get_transient( 'lubus_wdw_wordcamp_JSON' );
 	  if( ! empty( $transient ) ) {
 		    return json_decode($transient,true);
 	  } else {
-	  		$api_url = 'https://central.wordcamp.orgj/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
+	  		$api_url = 'https://central.wordcamp.org/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
 			$api_response = wp_remote_get( $api_url, array('sslverify' => false));  // Call the API.
 
 	  		if (lubus_wdw_check_response($api_response)) { 		
