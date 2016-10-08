@@ -96,7 +96,7 @@ function lubus_wdw_display_wordcamps() {
 							<?php echo $value['title']; ?>
 						</a>
 					</td>
-					<td data-colname="Date">
+					<td data-colname="Date" data-order="<?php echo date("Y-m-d", $timestamp); ?>">
 						<?php 
 							echo date("d-m-Y", $timestamp);
 						?>
@@ -114,7 +114,7 @@ function lubus_wdw_display_wordcamps() {
 	} else {
 	?>
 		<div class="wp-ui-notification" id="lubus_wdw_error">
-			<p><span class="dashicons dashicons-dismiss"></span> Unable to connect to wordcamp API try again later ... !</p>
+			<p><span class="dashicons dashicons-dismiss"></span> Unable to connect to wordcamp API try reloading the page ... !</p>
 		</div>
 		<p class="wp-ui-text-notification">If error persist <a href="https://github.com/lubusonline/wordcamp-dashboard-widget/issues/new" target="_new">click here</a> to create issue on github</p>
 	<?php
@@ -130,7 +130,7 @@ function lubus_wdw_get_wordcamp_data(){
 		    return json_decode($transient,true);
 	  } else {
 	  		$api_url = 'https://central.wordcamp.org/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
-			$out = wp_remote_get( $api_url);  // Call the API.
+			$out = wp_remote_get( $api_url, array('sslverify' => false));  // Call the API.
 
 	  		if (lubus_wdw_check_response($out)) { 		
 		  		// Get json data & filterit:
