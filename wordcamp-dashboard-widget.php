@@ -74,7 +74,7 @@ add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
 
 function lubus_wdw_display_wordcamps() {
 	$upcoming_wordcamps = lubus_wdw_get_wordcamp_data();
-	if($upcoming_wordcamps){
+	if($upcoming_wordcamps && !is_wp_error($upcoming_wordcamps)){
 ?>
 	    <table id="lubus-wordcamp" class="display">
 		<thead>
@@ -114,9 +114,17 @@ function lubus_wdw_display_wordcamps() {
 	} else {
 	?>
 		<div class="wp-ui-notification" id="lubus_wdw_error">
-			<p><span class="dashicons dashicons-dismiss"></span> Unable to connect to wordcamp API try reloading the page ... !</p>
+			<p><span class="dashicons dashicons-dismiss"></span> Unable to connect to wordcamp API try reloading the page</p>
 		</div>
-		<p class="wp-ui-text-notification">If error persist <a href="https://github.com/lubusonline/wordcamp-dashboard-widget/issues/new" target="_new">click here</a> to create issue on github</p>
+		<p class=".wp-ui-text-primary">If error persist <a href="https://github.com/lubusonline/wordcamp-dashboard-widget/issues/new" target="_new">click here</a> to create issue on github with the following error message</p>
+		<p>
+			<?php  
+				if ( is_wp_error( $upcoming_wordcamps ) ) {
+				   $error_string = $upcoming_wordcamps->get_error_message();
+				   echo '<p class="wp-ui-text-notification">' . $error_string . '</p>';
+				}
+			?>
+		</p>
 	<?php
 	}
 }
@@ -125,16 +133,17 @@ function lubus_wdw_display_wordcamps() {
  * Get Wordcamp Data
  */
 function lubus_wdw_get_wordcamp_data(){
+	  delete_transient("lubus_wdw_wordcamp_JSON"); // Remove transient data for plugin
 	  $transient = get_transient( 'lubus_wdw_wordcamp_JSON' );
 	  if( ! empty( $transient ) ) {
 		    return json_decode($transient,true);
 	  } else {
-	  		$api_url = 'https://central.wordcamp.org/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
-			$out = wp_remote_get( $api_url, array('sslverify' => false));  // Call the API.
+	  		$api_url = 'https://central.wordcamp.orgj/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=150';
+			$api_response = wp_remote_get( $api_url, array('sslverify' => false));  // Call the API.
 
-	  		if (lubus_wdw_check_response($out)) { 		
+	  		if (lubus_wdw_check_response($api_response)) { 		
 		  		// Get json data & filterit:
-			    $parsed_json = json_decode($out['body'], true);
+			    $parsed_json = json_decode($api_response['body'], true);
 			    $upcoming_wordcamps = array();
 
 			    // Create New JSON from filtered data
@@ -151,6 +160,10 @@ function lubus_wdw_get_wordcamp_data(){
 				}
 				 set_transient( 'lubus_wdw_wordcamp_JSON',json_encode($upcoming_wordcamps), DAY_IN_SECONDS );
 				 return $upcoming_wordcamps;
+			}
+
+			if ( is_wp_error( $api_response ) ) {
+				return  $api_response;
 			}
 			return false;
 	  }
