@@ -3,14 +3,14 @@
  *
  * @link              http://www.lubus.in
  * @since             0.1.1
- * @package           Wordcamp_Dashboard_Widget
+ * @package           WordCamp_Dashboard_Widget
  *
  * @wordpress-plugin
- * Plugin Name:       Wordcamp Dashboard Widget
+ * Plugin Name:       WordCamp Dashboard Widget
  * Plugin URI:        https://github.com/lubusonline/wordcamp-dashboard-widget
- * Description:       Wordpress plugin to show upcoming wordcamp on wp-admin dashboard.
+ * Description:       Wordpress plugin to show upcoming WordCamp on wp-admin dashboard.
  * Version:           0.1.1
- * Author:            LUBUS
+ * Author:            LUBUS, Ajit Bohra
  * Author URI:        http://www.lubus.in
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -49,7 +49,7 @@ wp_enqueue_style( "css-datatables", plugin_dir_url( __FILE__ ) . 'assets/css/jqu
 wp_enqueue_style( "css-style", plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), "1.0", 'all' );
 
 /**
- * Enqueue styles
+ * Enqueue scripts
  */
 wp_enqueue_script( "js-datatables", plugin_dir_url( __FILE__ ) . 'assets/js/jquery.dataTables.min.js', array( 'jquery' ), "1.0", false );
 wp_enqueue_script( "js-script", plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array( 'jquery','js-datatables' ), "1.0", false );
@@ -62,8 +62,8 @@ wp_enqueue_script( "js-script", plugin_dir_url( __FILE__ ) . 'assets/js/script.j
 function lubus_wdw_add_widget() {
 	wp_add_dashboard_widget(
                  'lubus_wdw_wordcamp_widget',  // Widget slug.
-                 'Upcoming Wordcamps',      // Title.
-                 'lubus_wdw_upcoming_wordcamp' // Display function.
+                 'Upcoming WordCamps',      // Title.
+                 'lubus_wdw_display_wordcamps' // Display function.
         );	
 }
 add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
@@ -72,7 +72,7 @@ add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
  * Create the function to output the contents of our Dashboard Widget.
  */
 
-function lubus_wdw_upcoming_wordcamp() {
+function lubus_wdw_display_wordcamps() {
 	$upcoming_wordcamps = lubus_wdw_get_wordcamp_data();
 	if($upcoming_wordcamps){
 ?>
@@ -120,7 +120,6 @@ function lubus_wdw_upcoming_wordcamp() {
 	<?php
 	}
 }
-
 
 /**
  * Get Wordcamp Data
