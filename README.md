@@ -3,7 +3,7 @@
 
 Display upcoming WordCamps on your wp-admin dashboard
 
->**Disclaimer:** This initial release v0.1 is written quickly in few odd hours, will be rewritten as the plugin progresses. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
+>**Disclaimer:** Plugin development is in progress & we are constantly improving the code. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
 
 **Screenshot**
 ![Plugin Screenshot](https://raw.githubusercontent.com/lubusonline/wordcamp-dashboard-widget/master/assets/screenshot-1.gif)
@@ -38,6 +38,20 @@ If you have any suggestions/Feature request that you would like to see in the up
 
 **Change Log**
 --------------
+***v0.2***
+
+Released on 10th October 2016
+
+ - Fixed fatal error on plugin activation
+ - Fixed wp_remote_get() fatal error to catch and show user friendly error message
+ - Funcitons, text & comments renaming/typos
+ - Code comments added at required places
+ - Developer friendly error message for easy troubleshooting
+ - Fixed cURL error 51 (On some servers)
+ - Fixed incorrect WordCamp data sorting (Sorting by date)
+ - Fixed cURL error 28: Operation timed out after 5000 milliseconds
+ - Fixed scripts & styles to load only on main dashboard page
+
 ***v0.1.1***
 
 Released on 6th October 2016

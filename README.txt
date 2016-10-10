@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: lubus,ajitbohra  
 Donate link: http://www.lubus.in  
-Tags: wordcamp, widget, dashboard  
+Tags: admin, dashboard, widget, wordcamp 
 Requires at least: 3.0.1  
 Tested up to:  4.6.1  
-Stable tag: 0.1.1  
+Stable tag: 0.2
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -12,7 +12,7 @@ Display upcoming WordCamps on your wp-admin dashboard
 
 
 == Description ==
->**Disclaimer:** This initial release v0.1 is written quickly in few odd hours, will be rewritten as the plugin progresses. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
+>**Disclaimer:** Plugin development is in progress & we are constantly improving the code. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
 
 We have created this plugin out of personal need to have quick access to list of upcoming WordCamps right from the wp-admin. Plugin displays a widget on dashboard containing the list of upcoming WordCamps with options to search, sort & navigate through list along with direct link to respective wordcamp website. Data is fetched using JSON API (from https://central.wordcamp.org/wp-json/posts?type=wordcamp) and stored in transient for better performance, which is refreshed every day to reflect new data.
 
@@ -48,6 +48,20 @@ If you have any suggestions/Feature request that you would like to see in the up
 1. Widget in action
 
 == Changelog ==
+***v0.2***
+
+Released on 10th October 2016
+
+ - Fixed fatal error on plugin activation
+ - Fixed wp_remote_get() fatal error to catch and show user friendly error message
+ - Funcitons, text & comments renaming/typos
+ - Code comments added at required places
+ - Developer friendly error message for easy troubleshooting
+ - Fixed cURL error 51 (On some servers)
+ - Fixed incorrect WordCamp data sorting (Sorting by date)
+ - Fixed cURL error 28: Operation timed out after 5000 milliseconds
+ - Fixed scripts & styles to load only on main dashboard page
+
 ***v0.1.1***
 
 Released on 6th October 2016
