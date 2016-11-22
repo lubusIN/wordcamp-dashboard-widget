@@ -116,14 +116,14 @@ function lubus_wdw_display_wordcamps() {
 					</td>
 
 					<td data-colname="Twitter">
-						<a href="<?php echo lubus_wdw_get_twitter_url($value['post_meta'],"Twitter"); ?>" target="_new" title="Twitter profile">
+						<a href="<?php echo lubus_wdw_get_twitter_data($value['post_meta'],"Twitter","url"); ?>" target="_new" title="Twitter profile">
 							<span class="dashicons dashicons-twitter"></span> 
 							
 						</a>
 
 						<span class="wdw_sep">|</span> 
 
-						<a href="<?php echo lubus_wdw_get_twitter_hastag($value['post_meta'],"WordCamp Hashtag"); ?>" target="_new" title="Twitter Hashtag">
+						<a href="<?php echo lubus_wdw_get_twitter_data($value['post_meta'],"WordCamp Hashtag","hashtag"); ?>" target="_new" title="Twitter Hashtag">
 							<span class="wdw_hashtag">#</span>
 						</a>
 
@@ -159,7 +159,6 @@ function lubus_wdw_display_wordcamps() {
  * Get Wordcamp Data
  */
 function lubus_wdw_get_wordcamp_data(){
-	  //delete_transient( 'lubus_wdw_wordcamp_JSON' );
 	  $transient = get_transient( 'lubus_wdw_wordcamp_JSON' ); // Get data from wordpress transient/cache
 	  if( ! empty( $transient ) ) {
 		    return json_decode($transient,true);
@@ -182,7 +181,6 @@ function lubus_wdw_get_wordcamp_data(){
 					// Check if data is not empty, N/A or less then 
 					if ( $wordcamp_date !="" && $wordcamp_date !="N/A" && date("Y-m-d",$wordcamp_date) >= $today) {
 						$upcoming_wordcamps[] = $value;
-						$upcoming_wordcamps = $upcoming_wordcamps;
 					}
 				}
 
@@ -212,41 +210,24 @@ function lubus_wdw_get_meta($meta_array,$meta_key){
 }
 
 /**
- * Get twitter profile url
+ * Get twitter data
  */
-function lubus_wdw_get_twitter_url($meta_array,$meta_key){
-	$twitter_data = lubus_wdw_get_meta($meta_array,$meta_key); // Get inconsistent twitter value (url/name/@name)
+function lubus_wdw_get_twitter_data($meta_array,$meta_key,$data_type){
+	$twitter_data = lubus_wdw_get_meta($meta_array,$meta_key); // Get inconsistent twitter data
 
 	$regx_twitter_url = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
-	$regx_twitter_mention = '/@([A-Za-z0-9_]{1,15})/';
-
-	$twitter_url = "https://www.twitter.com/";
-
-	if (preg_match($regx_twitter_url,$twitter_data)) {
-		$twitter_url = $twitter_data; // If proper URL leave it
-	}
-	else{
-		$twitter_url .= $twitter_data; // Append based URL
-	}
-
-	return $twitter_url;
-}
-
-/**
- * Get twitter hashtag url
- */
-function lubus_wdw_get_twitter_hastag($meta_array,$meta_key){
-	$twitter_data = lubus_wdw_get_meta($meta_array,$meta_key); // Get inconsistent twitter value (url/name/@name)
-
 	$regx_twitter_hashtag = '/\S*#(?:\[[^\]]+\]|\S+)/';
 
 	$twitter_url = "https://www.twitter.com/";
 
-	if (preg_match($regx_twitter_hashtag,$twitter_data)) {
-		$twitter_url .= $twitter_data; // If proper URL leave it
-	}
-	else{
-		$twitter_url .= '#'. $twitter_data; // Append based URL
+	switch ($data_type) {
+		case 'url':
+			 	$twitter_url = (preg_match($regx_twitter_url,$twitter_data) ? $twitter_url = $twitter_data : $twitter_url .= $twitter_data);
+			break;
+		
+		case 'hashtag':
+				$twitter_url = (preg_match($regx_twitter_hashtag,$twitter_data) ? $twitter_url .= $twitter_data : $twitter_url .= '#'. $twitter_data);
+			break;
 	}
 
 	return $twitter_url;
