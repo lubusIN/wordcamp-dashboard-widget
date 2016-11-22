@@ -3,10 +3,10 @@
 
 Display upcoming WordCamps on your wp-admin dashboard
 
->**Disclaimer:** Plugin development is in progress & we are constantly improving the code. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
+>**Disclaimer:** Plugin development is in progress & we are constantly improving the code. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusIN/wordcamp-dashboard-widget/issues).
 
 **Screenshot**
-![Plugin Screenshot](https://raw.githubusercontent.com/lubusonline/wordcamp-dashboard-widget/master/assets/screenshot-1.gif)
+![Plugin Screenshot](https://raw.githubusercontent.com/lubusIN/wordcamp-dashboard-widget/master/assets/screenshot-1.gif)
 
 **About**
 
@@ -21,7 +21,7 @@ We have created this plugin out of personal need to have quick access to list of
  4. Option to filter WordCamps based on users location/country
  5. localization 
 
-If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusonline/wordcamp-dashboard-widget/issues) 
+If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusIN/wordcamp-dashboard-widget/issues) 
 
 
 **Installation**
@@ -36,33 +36,31 @@ If you have any suggestions/Feature request that you would like to see in the up
  2. Upload the 'wordcamp-dashboard-widget' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
  3. Activate "Wordcamp Dashboard Widget" from your Plugins page. 
 
-**Change Log**
---------------
-***v0.2***
+**Contributing**
+----------------
 
-Released on 10th October 2016
+Thank you for considering contributing to the WordCamp Dashboard Widget. You can read the contribution guide lines [here](CONTRIBUTING.md)
 
- - Fixed fatal error on plugin activation
- - Fixed wp_remote_get() fatal error to catch and show user friendly error message
- - Funcitons, text & comments renaming/typos
- - Code comments added at required places
- - Developer friendly error message for easy troubleshooting
- - Fixed cURL error 51 (On some servers)
- - Fixed incorrect WordCamp data sorting (Sorting by date)
- - Fixed cURL error 28: Operation timed out after 5000 milliseconds
- - Fixed scripts & styles to load only on main dashboard page
+**Security**
+------------
 
-***v0.1.1***
+If you discover any security related issues, please email to [ajit@lubus.in](mailto:ajit@lubus.com) instead of using the issue tracker.
 
-Released on 6th October 2016
+**Credits**
+------------
 
- - Functions renamed to be unique (as suggested by wordpress.org plugin review)
- - Datatables jquery plugin included locally to remove dependency (as suggested by wordpress.org plugin review)
- - wordpress.org plugin page assets removed
- - Readme updated
- 
-***v0.1***
+- [Ratnesh Sonar](https://twitter.com/ratneshsonar) Idea / Concept
+- [Ajit Bohra](http://https://twitter.com/ajitbohra) Development
+- [Meher Bala](https://twitter.com/meherbala) Issue Reporting
 
-Released on 28th September 2016
+**About LUBUS**
+---------------
+LUBUS is a web design agency based in Mumbai. More about us could be found here [on our website](http://lubus.in).
 
- - Initial plugin release
+**License**
+-----------
+WordCamp Dashboard Widget is open-sourced software licensed under the [GPL 3.0 license](LICENSE)
+
+**Changelog**
+-------------
+Please see the [Changelog](https://github.com/lubusIN/wordcamp-dashboard-widget/blob/master/CHANGELOG.md) for the details

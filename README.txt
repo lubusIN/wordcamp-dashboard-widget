@@ -12,7 +12,7 @@ Display upcoming WordCamps on your wp-admin dashboard
 
 
 == Description ==
->**Disclaimer:** Plugin development is in progress & we are constantly improving the code. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusonline/wordcamp-dashboard-widget/issues).
+>**Disclaimer:** Plugin development is in progress & we are constantly improving the code. If you think code can be improved or have any suggestion feel free to send a PR or [open an issue](https://github.com/lubusIN/wordcamp-dashboard-widget/issues).
 
 We have created this plugin out of personal need to have quick access to list of upcoming WordCamps right from the wp-admin. Plugin displays a widget on dashboard containing the list of upcoming WordCamps with options to search, sort & navigate through list along with direct link to respective wordcamp website. Data is fetched using JSON API (from https://central.wordcamp.org/wp-json/posts?type=wordcamp) and stored in transient for better performance, which is refreshed every day to reflect new data.
 
@@ -27,8 +27,13 @@ We have created this plugin out of personal need to have quick access to list of
 5.Option to filter wordcamps based on users location/country<br>
 6.localization 
 
-If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusonline/wordcamp-dashboard-widget/issues) 
+If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusIN/wordcamp-dashboard-widget/issues) 
 
+**Credits**
+
+- [Ratnesh Sonar](https://twitter.com/ratneshsonar) Idea / Concept<br>
+- [Ajit Bohra](http://https://twitter.com/ajitbohra) Development<br>
+- [Meher Bala](https://twitter.com/meherbala) Issue Reporting<br>
 
 == Installation ==
 ***From your WordPress dashboard***
@@ -48,6 +53,15 @@ If you have any suggestions/Feature request that you would like to see in the up
 1. Widget in action
 
 == Changelog ==
+
+***v0.5***
+
+Released on 22nd November 2016
+
+- Fixed UI to to be inline with WordPress
+- Added Twitter profile and hashtag for the WordCamps
+- Fixed fatal error on date conversion
+
 ***v0.2***
 
 Released on 10th October 2016

@@ -6,9 +6,24 @@
 	padding: 1px 10px;
 }
 
+.wdw_hashtag{
+	font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    vertical-align: top;
+    text-align: center;
+    line-height: 1;
+    width: 20px;
+    height: 20px;
+}
+
 .dataTables_length,
 .dataTables_filter{
     margin-bottom: 10px;
+}
+
+table.dataTable thead th{
+	text-align: left;
 }
 
 table.dataTable thead th, 
@@ -24,4 +39,39 @@ table.dataTable.no-footer,
 table.dataTable thead th, 
 table.dataTable thead td{
 	border-bottom: 1px solid #e5e5e5;
+}
+
+.dataTables_paginate {
+	margin-top: 5px;
+}
+
+.dataTables_paginate .previous{
+	margin-right: 5px;
+}
+
+table.dataTable thead th {
+    position: relative;
+    background-image: none !important;
+}
+ 
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    display: block;
+    font: 400 20px/1 dashicons;
+}
+
+table.dataTable thead th.sorting:after {
+    content: "\f156";
+    color: #ddd;
+    padding-top: 0;
+}
+table.dataTable thead th.sorting_asc:after {
+    content: "\f142";
+}
+table.dataTable thead th.sorting_desc:after {
+    content: "\f140";
 }
