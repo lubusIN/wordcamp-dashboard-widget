@@ -116,12 +116,12 @@ function lubus_wdw_display_wordcamps() {
 					</td>
 
 					<td data-colname="Date" data-order="<?php echo esc_html( date( 'Y-m-d', $timestamp ) ); ?>">
-						<?php echo esc_html( date( 'd-m-Y', $timestamp ) ); ?>
+						<?php echo esc_html( date( 'd/m/Y', $timestamp ) ); ?>
 					</td>
 
 					<td data-colname="Twitter">
 						<a href="<?php echo esc_html( lubus_wdw_get_twitter_data( $value['post_meta'],'Twitter' ,'url' ) ); ?>" target="_new" title="Twitter profile">
-							<span class="dashicons dashicons-twitter"></span>
+							<span class="wdw_hashtag">@</span>
 						</a>
 
 						<span class="wdw_sep">|</span>
