@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       WordCamp Dashboard Widget
  * Plugin URI:        https://github.com/lubusIN/wordcamp-dashboard-widget
- * Description:       Wordpress plugin to show upcoming WordCamp on wp-admin dashboard.
+ * Description:       Wordpress plugin to show upcoming WordCamps on wp-admin dashboard.
  * Version:           0.5
  * Author:            LUBUS, Ajit Bohra
  * Author URI:        http://www.lubus.in
@@ -41,20 +41,37 @@ function lubus_wdw_deactivate() {
 register_deactivation_hook( __FILE__, 'lubus_wdw_deactivate' );
 
 /**
- * Enqueue styles
- *
- * @param string $hook HookName.
+ * Shortcode styles.
  */
-function lubus_wdw_add_styles( $hook ) {
-	if ( 'index.php' !== $hook ) { return; } // Only if its main dashboard page
-
+function lubus_wdw_styles() {
 	wp_register_style( 'css-datatables', plugin_dir_url( __FILE__ ) . 'assets/css/jquery.dataTables.min.css', array(), '1.0', 'all' );
 	wp_register_style( 'css-style', plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), '1.0', 'all' );
 
 	wp_enqueue_style( 'css-datatables' );
 	wp_enqueue_style( 'css-style' );
 }
+
+/**
+ * Enqueue styles
+ *
+ * @param string $hook HookName.
+ */
+function lubus_wdw_add_styles( $hook ) {
+	if ( 'index.php' !== $hook ) { return; } // Only if its main dashboard page
+	lubus_wdw_styles();
+}
 add_action( 'admin_enqueue_scripts', 'lubus_wdw_add_styles' );
+
+/**
+ * Shortcode scripts
+ */
+function lubus_wdw_scripts() {
+	wp_register_script( 'js-datatables', plugin_dir_url( __FILE__ ) . 'assets/js/jquery.dataTables.min.js', array( 'jquery' ), '1.0', false );
+	wp_register_script( 'js-script', plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array( 'jquery', 'js-datatables' ), '1.0', false );
+
+	wp_enqueue_script( 'js-datatables' );
+	wp_enqueue_script( 'js-script' );
+}
 
 /**
  * Enqueue Scripts
@@ -63,12 +80,7 @@ add_action( 'admin_enqueue_scripts', 'lubus_wdw_add_styles' );
  */
 function lubus_wdw_add_scripts( $hook ) {
 	if ( 'index.php' !== $hook ) { return; }  // Only if its main dashboard page
-
-	wp_register_script( 'js-datatables', plugin_dir_url( __FILE__ ) . 'assets/js/jquery.dataTables.min.js', array( 'jquery' ), '1.0', false );
-	wp_register_script( 'js-script', plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array( 'jquery', 'js-datatables' ), '1.0', false );
-
-	wp_enqueue_script( 'js-datatables' );
-	wp_enqueue_script( 'js-script' );
+	lubus_wdw_scripts();
 }
 add_action( 'admin_enqueue_scripts', 'lubus_wdw_add_scripts' );
 
@@ -87,12 +99,38 @@ function lubus_wdw_add_widget() {
 add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
 
 /**
+ * Shortcode to display Upcoming WordCamp
+ *
+ * @param  array $atts attributes array.
+ * @return mixed        WordCamp Data.
+ */
+function cs_wordcamps( $atts ) {
+
+	// Shortcode attributes.
+	$atts = shortcode_atts(
+		array(
+			'pagesize' 	=> '10',
+			'theme' 		=> 'none',
+			'country' 	=> 'india',
+		),
+		$atts,
+		'wordcamps'
+	);
+
+	lubus_wdw_styles();
+	lubus_wdw_scripts();
+	lubus_wdw_display_wordcamps();
+
+}
+add_shortcode( 'wordcamps', 'cs_wordcamps' );
+
+/**
  * Create the function to output the contents of our Dashboard Widget.
  */
 function lubus_wdw_display_wordcamps() {
 	$upcoming_wordcamps = lubus_wdw_get_wordcamp_data(); // Get data.
 
-	// Generate tables if its data and not a WP_ERROR.
+	// Generate tables if contains data and not a WP_ERROR.
 	if ( $upcoming_wordcamps && ! is_wp_error( $upcoming_wordcamps )  ) {
 ?>
 	<table id="lubus-wordcamp" class="display">
@@ -139,7 +177,7 @@ function lubus_wdw_display_wordcamps() {
 		</table>
 	<?php
 	} else {
-		// Show error is unable to display or fetch data.
+		// Show error if unable to display or fetch data.
 	?>
 		<div class="wp-ui-notification" id="lubus_wdw_error">
 			<p><span class="dashicons dashicons-dismiss"></span> Unable to connect to WordCamp API try reloading the page</p>
@@ -187,9 +225,9 @@ function lubus_wdw_get_wordcamp_data() {
 				}
 			}
 
-				 // Store data to wordpress transient/cache.
-				set_transient( 'lubus_wdw_wordcamp_JSON', wp_json_encode( $upcoming_wordcamps ), DAY_IN_SECONDS );
-				return $upcoming_wordcamps;
+			// Store data to wordpress transient/cache.
+			set_transient( 'lubus_wdw_wordcamp_JSON', wp_json_encode( $upcoming_wordcamps ), DAY_IN_SECONDS );
+			return $upcoming_wordcamps;
 		}
 
 		if ( is_wp_error( $api_response ) ) {
