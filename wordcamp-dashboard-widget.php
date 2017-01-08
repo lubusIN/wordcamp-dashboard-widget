@@ -145,11 +145,11 @@ if ( defined( 'WPB_VC_VERSION' ) ) {
 			'category' => __( 'Content', 'js_composer' ),
 			'params' => array(
 				array(
-					 'type' => 'title',
+					 'type' => 'text',
 					 'holder' => 'div',
 					 'class' => '',
 					 'heading' => __( 'Hit Save - No Settings' ),
-					 'param_name' => 'msg',
+					 'param_name' => 'lubus_wdw_country',
 					 'value' => __( 'Hit Save - No Settings' ),
 					 'description' => __( 'Coming Soon ...' ),
 			 		),
@@ -168,7 +168,7 @@ function lubus_wdw_display_wordcamps() {
 	// Generate tables if contains data and not a WP_ERROR.
 	if ( $upcoming_wordcamps && ! is_wp_error( $upcoming_wordcamps )  ) {
 ?>
-	<table id="lubus-wordcamp" class="display">
+	<table class="display lubus-wordcamp-table">
 		<thead>
 			<tr>
 				<th scope="col" class="column-primary">Location</th>

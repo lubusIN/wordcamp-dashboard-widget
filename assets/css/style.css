@@ -1,4 +1,4 @@
-#lubus-wordcamp{
+.lubus-wordcamp-table{
 	border: 1px solid #e5e5e5;
 }
 
@@ -26,17 +26,17 @@ table.dataTable thead th{
 	text-align: left;
 }
 
-table.dataTable thead th, 
+table.dataTable thead th,
 table.dataTable tfoot th{
 	font-weight: 600
 }
 
-#lubus-wordcamp th#date{
+.lubus-wordcamp-table th#date{
 	width: 55px;
 }
 
 table.dataTable.no-footer,
-table.dataTable thead th, 
+table.dataTable thead th,
 table.dataTable thead td{
 	border-bottom: 1px solid #e5e5e5;
 }
@@ -53,7 +53,7 @@ table.dataTable thead th {
     position: relative;
     background-image: none !important;
 }
- 
+
 table.dataTable thead th.sorting:after,
 table.dataTable thead th.sorting_asc:after,
 table.dataTable thead th.sorting_desc:after {
