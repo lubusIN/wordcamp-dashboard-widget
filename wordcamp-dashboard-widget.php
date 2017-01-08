@@ -106,7 +106,7 @@ add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
  */
 function cs_wordcamps( $atts ) {
 	// Shortcode attributes.
-	$atts = shortcode_atts(
+	shortcode_atts(
 		array(
 			'pagesize' 	=> '10',
 			'theme' 		=> 'none',
@@ -116,9 +116,13 @@ function cs_wordcamps( $atts ) {
 		'wordcamps'
 	);
 
-	lubus_wdw_display_wordcamps();
 	lubus_wdw_styles();
 	lubus_wdw_scripts();
+
+	ob_start();
+	lubus_wdw_display_wordcamps();
+	return ob_get_clean();
+
 }
 add_shortcode( 'wordcamps', 'cs_wordcamps' );
 
@@ -144,9 +148,9 @@ if ( defined( 'WPB_VC_VERSION' ) ) {
 					 'type' => 'title',
 					 'holder' => 'div',
 					 'class' => '',
-					 'heading' => __( 'No Settings' ),
+					 'heading' => __( 'Hit Save - No Settings' ),
 					 'param_name' => 'msg',
-					 'value' => __( 'No Settings' ),
+					 'value' => __( 'Hit Save - No Settings' ),
 					 'description' => __( 'Coming Soon ...' ),
 			 		),
 				),
