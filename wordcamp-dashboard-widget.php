@@ -105,7 +105,6 @@ add_action( 'wp_dashboard_setup', 'lubus_wdw_add_widget' );
  * @return mixed        WordCamp Data.
  */
 function cs_wordcamps( $atts ) {
-
 	// Shortcode attributes.
 	$atts = shortcode_atts(
 		array(
@@ -117,12 +116,44 @@ function cs_wordcamps( $atts ) {
 		'wordcamps'
 	);
 
+	lubus_wdw_display_wordcamps();
 	lubus_wdw_styles();
 	lubus_wdw_scripts();
-	lubus_wdw_display_wordcamps();
-
 }
 add_shortcode( 'wordcamps', 'cs_wordcamps' );
+
+/**
+ * Visual Composer Integration.
+ */
+if ( defined( 'WPB_VC_VERSION' ) ) {
+	add_action( 'vc_before_init', 'lubus_wdw_VC_integration' );
+	/**
+	 * Support for Visual Composer.
+	 */
+	function lubus_wdw_vc_integration() {
+		vc_map( array(
+			'name' => __( 'WordCamps Listing', 'vc_extend' ),
+			'description' => __( 'Display Upcoming WordCamps', 'vc_extend' ),
+			'base' => 'wordcamps',
+			'class' => '',
+			'controls' => 'full',
+			'icon' => plugin_dir_url( __FILE__ ) . 'assets/images/asterisk_yellow.png', // or css class name which you can reffer in your css file later. Example: 'vc_extend_my_class'.
+			'category' => __( 'Content', 'js_composer' ),
+			'params' => array(
+				array(
+					 'type' => 'title',
+					 'holder' => 'div',
+					 'class' => '',
+					 'heading' => __( 'No Settings' ),
+					 'param_name' => 'msg',
+					 'value' => __( 'No Settings' ),
+					 'description' => __( 'Coming Soon ...' ),
+			 		),
+				),
+			)
+		);
+	}
+}
 
 /**
  * Create the function to output the contents of our Dashboard Widget.
