@@ -16,25 +16,31 @@ We have created this plugin out of personal need to have quick access to list of
 
  1. Option to refresh data
  2. Re-write plugin code
- 2. Improve data fetching
- 3. Creating shortcode to display wordcamp list anywhere on website front-end 
- 4. Option to filter WordCamps based on users location/country
- 5. localization 
+ 3. Improve data fetching
+ 4. <del >Creating shortcode to display wordcamp list anywhere on website front-end</de>
+ 5. Option to filter WordCamps based on users location/country
+ 6. localization
 
-If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusIN/wordcamp-dashboard-widget/issues) 
+If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusIN/wordcamp-dashboard-widget/issues)
 
 
 **Installation**
 ----------------
 ***From your WordPress dashboard***
- 1. Visit 'Plugins > Add New' 
+ 1. Visit 'Plugins > Add New'
  2. Search for 'Wordcamp Dashboard Widget'  or upload zip file
  3. Activate "Wordcamp Dashboard Widget" from your Plugins page
 
-***Manual Installation*** 
+***Manual Installation***
  1. [Download](https://wordpress.org/plugins/wc-dashboard-widget/) "WordCamp Dashboard Widget".
  2. Upload the 'wordcamp-dashboard-widget' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
- 3. Activate "Wordcamp Dashboard Widget" from your Plugins page. 
+ 3. Activate "Wordcamp Dashboard Widget" from your Plugins page.
+
+**Usage**
+----------------
+- Simply activate and widget will displayed on dashboard
+- To display elsewhere use the Shortcode `[wordcamps]`
+- If your using visual composer you widget for the same is available
 
 **Contributing**
 ----------------
@@ -51,11 +57,11 @@ If you discover any security related issues, please email to [ajit@lubus.in](mai
 
 - [Ratnesh Sonar](https://twitter.com/ratneshsonar) Idea / Concept
 - [Ajit Bohra](http://https://twitter.com/ajitbohra) Development
-- [Meher Bala](https://twitter.com/meherbala) Issue Reporting
+- [Meher Bala](https://twitter.com/meherbala) Helping with issue Reporting & troubleshooting
 
 **About LUBUS**
 ---------------
-LUBUS is a web design agency based in Mumbai. More about us could be found here [on our website](http://lubus.in).
+LUBUS is a WordPress & Laravel agency based in Mumbai. More about us could be found here [on our website](http://lubus.in).
 
 **License**
 -----------

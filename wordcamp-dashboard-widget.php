@@ -11,7 +11,7 @@
  * Plugin Name:       WordCamp Dashboard Widget
  * Plugin URI:        https://github.com/lubusIN/wordcamp-dashboard-widget
  * Description:       Wordpress plugin to show upcoming WordCamps on wp-admin dashboard.
- * Version:           0.5
+ * Version:           0.6
  * Author:            LUBUS, Ajit Bohra
  * Author URI:        http://www.lubus.in
  * License:           GPL-3.0+
