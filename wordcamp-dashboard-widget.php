@@ -188,8 +188,8 @@ function lubus_wdw_display_wordcamps() {
 						</a>
 					</td>
 
-					<td data-colname="Date" data-order="<?php echo esc_html( date( 'Y-m-d', $timestamp ) ); ?>">
-						<?php echo esc_html( date( 'd/m/Y', $timestamp ) ); ?>
+					<td data-colname="Date" data-order="<?php echo esc_html( date( get_option('date_format'), $timestamp ) ); ?>">
+						<?php echo esc_html( date( get_option('date_format'), $timestamp ) ); ?>
 					</td>
 
 					<td data-colname="Twitter">
