@@ -1,12 +1,12 @@
-=== Plugin Name ===
-Contributors: lubus,ajitbohra
+=== Wordcamp's Shortcode Widget===
+Contributors: lubus, ajitbohra
 Donate link: http://www.lubus.in
-Tags: admin, dashboard, widget, wordcamp
+Tags: admin, dashboard, widget, shortcode, wordcamp
 Requires at least: 3.0.1
-Tested up to:  4.7.2
+Tested up to:  4.7.3
 Stable tag: 0.6
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Display upcoming WordCamps on your wp-admin dashboard
 
@@ -25,14 +25,15 @@ We have created this plugin out of personal need to have quick access to list of
 - To display elsewhere use the Shortcode `[wordcamps]`<br>
 - If your using visual composer you widget for the same is available<br>
 
-**Features coming in v1.0**
+**Roadmap**
 
-1.Option to refresh data<br>
-2.Re-write plugin code<br>
-3.Improve data fetching<br>
-4.<del>Creating shortcode to display WordCamp list anywhere on website</del><br>
-5.Option to filter wordcamps based on users location/country<br>
-6.localization
+ - Option to refresh data
+ - Re-write plugin code
+ - Improve data fetching
+ - <del >Creating shortcode to display wordcamp list anywhere on website front-end</de>
+ - Shortcode to display individual WordCamp details
+ - Option to filter WordCamps based on users location/country
+ - localization
 
 If you have any suggestions/Feature request that you would like to see in the upcoming releases , feel free to let us know in the [issues section](https://github.com/lubusIN/wordcamp-dashboard-widget/issues)
 

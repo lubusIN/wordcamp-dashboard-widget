@@ -8,6 +8,7 @@
  * @package           WordCamp_Dashboard_Widget
  *
  * @wordpress-plugin
+ * Contributors: lubus, ajitbohra
  * Plugin Name:       WordCamp Dashboard Widget
  * Plugin URI:        https://github.com/lubusIN/wordcamp-dashboard-widget
  * Description:       Wordpress plugin to show upcoming WordCamps on wp-admin dashboard.
@@ -36,7 +37,7 @@ register_activation_hook( __FILE__, 'lubus_wdw_activate' );
  * Plugin Deactivation: The code that runs during plugin deactivation.
  */
 function lubus_wdw_deactivate() {
-	delete_transient( 'lubus_wdw_wordcamp_JSON' ); // Remove transient data for plugin.
+	delete_transient( 'lubus_wdw_wordcamp_JSON_v2' ); // Remove transient data for plugin.
 }
 register_deactivation_hook( __FILE__, 'lubus_wdw_deactivate' );
 
@@ -109,7 +110,7 @@ function cs_wordcamps( $atts ) {
 	shortcode_atts(
 		array(
 			'pagesize' 	=> '10',
-			'theme' 		=> 'none',
+			'theme' 	=> 'none',
 			'country' 	=> 'india',
 		),
 		$atts,
@@ -179,29 +180,40 @@ function lubus_wdw_display_wordcamps() {
 		<tbody>
 		    <?php
 			foreach ( $upcoming_wordcamps as $key => $value ) {
-				$timestamp = lubus_wdw_get_meta( $value['post_meta'],'Start Date (YYYY-mm-dd)' );
+				$timestamp = $value['Start Date (YYYY-mm-dd)'];
 				?>
 				<tr>
 					<td class="column-primary" data-colname="Location">
-						<a href="<?php echo esc_html( lubus_wdw_get_meta( $value['post_meta'],'URL' ) ) ?>" target="_new" title="WordCamp Homepage">
-							<?php echo esc_html( lubus_wdw_get_meta( $value['post_meta'],'Location' ) ); ?>
+						<a href="<?php echo esc_html( $value['URL'] ) ?>" target="_new" title="WordCamp Homepage">
+							<?php echo esc_html( $value['Location'] ); ?>
 						</a>
 					</td>
 
-					<td data-colname="Date" data-order="<?php echo esc_html( date( get_option('date_format'), $timestamp ) ); ?>">
-						<?php echo esc_html( date( get_option('date_format'), $timestamp ) ); ?>
+					<td data-colname="Date" data-order="<?php echo esc_html( date( 'Y-m-d', $timestamp ) ); ?>">
+						<?php echo esc_html( date( get_option( 'date_format' ), $timestamp ) ); ?>
 					</td>
 
 					<td data-colname="Twitter">
-						<a href="<?php echo esc_html( lubus_wdw_get_twitter_data( $value['post_meta'],'Twitter' ,'url' ) ); ?>" target="_new" title="Twitter profile">
-							<span class="wdw_hashtag">@</span>
-						</a>
+						<?php $twitter_handle = lubus_wdw_get_twitter_data( $value['Twitter'], 'url' ); ?>
+						<?php if ( $twitter_handle ) : ?>
+							<a href="<?php echo esc_html( $twitter_handle ); ?>" target="_new" title="Twitter profile">
+								<span class="wdw_hashtag">@</span>
+							</a>
+						<?php else : ?>
+							<span class="wdw_hashtag wdw_na">-</span>
+						<?php endif ?>
 
 						<span class="wdw_sep">|</span>
 
-						<a href="<?php echo esc_html( lubus_wdw_get_twitter_data( $value['post_meta'],'WordCamp Hashtag','hashtag' ) ); ?>" target="_new" title="Twitter Hashtag">
-							<span class="wdw_hashtag">#</span>
-						</a>
+						<?php $twitter_hashtag = lubus_wdw_get_twitter_data( $value['WordCamp Hashtag'] , 'hashtag' ); ?>
+						<?php if ( $twitter_hashtag ) : ?>
+							<a href="<?php echo esc_html( $twitter_hashtag ); ?>" target="_new" title="Twitter Hashtag">
+								<span class="wdw_hashtag wdw_na">#</span>
+							</a>
+						<?php else : ?>
+							<span class="wdw_hashtag">-</span>
+						<?php endif ?>
+
 
 					</td>
 				</tr>
@@ -235,85 +247,54 @@ function lubus_wdw_display_wordcamps() {
  * Get Wordcamp Data
  */
 function lubus_wdw_get_wordcamp_data() {
-	$transient = get_transient( 'lubus_wdw_wordcamp_JSON' ); // Get data from wordpress transient/cache.
+	$transient = get_transient( 'lubus_wdw_wordcamp_JSON_v2' ); // Get data from wordpress transient/cache.
 	if ( ! empty( $transient ) ) {
 		    return json_decode( $transient,true );
 	} else {
-	  	$api_url = 'https://central.wordcamp.org/wp-json/posts?type=wordcamp&filter[order]=DESC&filter[posts_per_page]=300';
-			$request_args = array( 'sslverify' => false, 'timeout' => 10 );
-			$api_response = ( function_exists( 'vip_safe_wp_remote_get' ) ? vip_safe_wp_remote_get( $api_url, $request_args ) : wp_remote_get( $api_url, $request_args ) );  // Call the API.
+	  	$api_url = 'https://central.wordcamp.org/wp-json/wp/v2/wordcamps?per_page=100&status=wcpt-scheduled&order=desc'; // API URL.
+		$request_args = array( 'sslverify' => false, 'timeout' => 10 );
+		$api_response = ( function_exists( 'vip_safe_wp_remote_get' ) ? vip_safe_wp_remote_get( $api_url, $request_args ) : wp_remote_get( $api_url, $request_args ) );  // Call the API.
 
 	  	if ( lubus_wdw_check_response( $api_response ) ) {
-		  		// Get json data & filterit.
-			    $parsed_json = json_decode( $api_response['body'], true );
-			    $upcoming_wordcamps = array();
-
-			// Create New JSON from filtered data.
-			foreach ( $parsed_json as $key => $value ) {
-					$wordcamp_date = lubus_wdw_get_meta( $value['post_meta'], 'Start Date (YYYY-mm-dd)' );
-					$today = date( 'Y-m-d' );
-
-				// Create new JSON.
-				// Check if data is not empty, N/A or less then.
-				if ( '' !== $wordcamp_date && 'N/A' !== $wordcamp_date && date( 'Y-m-d', $wordcamp_date ) >= $today ) {
-						$upcoming_wordcamps[] = $value;
-				}
-			}
-
-			// Store data to wordpress transient/cache.
-			set_transient( 'lubus_wdw_wordcamp_JSON', wp_json_encode( $upcoming_wordcamps ), DAY_IN_SECONDS );
+	  		// Get json data & store data to wordpress transient/cache.
+		    $upcoming_wordcamps = json_decode( $api_response['body'], true );
+			set_transient( 'lubus_wdw_wordcamp_JSON_v2', wp_json_encode( $upcoming_wordcamps ), DAY_IN_SECONDS );
 			return $upcoming_wordcamps;
 		}
 
 		if ( is_wp_error( $api_response ) ) {
 				return  $api_response;
 		}
-			return false;
+		return false;
 	}
 }
-
-/**
- * Get meta from array
- *
- * @param  array  $meta_array Meta Array.
- * @param  string $meta_key   Meta Key.
- * @return string             Meta Value.
- */
-function lubus_wdw_get_meta( $meta_array, $meta_key ) {
-	$meta_value = 'N/A';
-	foreach ( $meta_array as $m_key => $m_value ) {
-		if ( $m_value['key'] === $meta_key ) {
-		 	$meta_value = $m_value['value'];
-		}
-	}
-	return $meta_value;
-}
-
 
 /**
  * Get twitter data
  *
- * @param  array  $meta_array Meta array.
- * @param  string $meta_key   Meta key.
+ * @param  string $data   Twitter Data (From APi).
  * @param  string $data_type  Twitter Data ( URL / Hashtag ).
  * @return string             [description].
  */
-function lubus_wdw_get_twitter_data( $meta_array, $meta_key, $data_type ) {
-	$twitter_data = lubus_wdw_get_meta( $meta_array,$meta_key ); // Get inconsistent twitter data.
-
-	$regx_twitter_url = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
-	$regx_twitter_hashtag = '/\S*#(?:\[[^\]]+\]|\S+)/';
-
-	$twitter_url = 'https://www.twitter.com/';
-
-	switch ( $data_type ) {
-		case 'url':
-			 	$twitter_url = ( preg_match( $regx_twitter_url,$twitter_data ) ? $twitter_url = $twitter_data : $twitter_url .= $twitter_data );
-			break;
-
-		case 'hashtag':
-				$twitter_url = ( preg_match( $regx_twitter_hashtag,$twitter_data ) ? $twitter_url .= $twitter_data : $twitter_url .= '#' . $twitter_data );
-			break;
+function lubus_wdw_get_twitter_data( $data, $data_type ) {
+	$twitter_data = $data; // Get inconsistent twitter data.
+	if ( $twitter_data ) {
+		$regx_twitter_url = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+		$regx_twitter_hashtag = '/\S*#(?:\[[^\]]+\]|\S+)/';
+		$twitter_url = 'https://www.twitter.com/';
+		switch ( $data_type ) {
+			case 'url':
+				 	$twitter_url = ( preg_match( $regx_twitter_url,$twitter_data ) ? $twitter_url = $twitter_data : $twitter_url .= $twitter_data );
+				break;
+			case 'hashtag':
+					$twitter_url = ( preg_match( $regx_twitter_hashtag,$twitter_data ) ? $twitter_url .= $twitter_data : $twitter_url .= '#' . $twitter_data );
+				break;
+			default:
+					$twitter_url = null;
+				break;
+		}
+	} else {
+		$twitter_url = null;
 	}
 
 	return $twitter_url;

@@ -17,6 +17,10 @@
     height: 20px;
 }
 
+.wdw_na{
+    padding: 0 4px;
+}
+
 .dataTables_length,
 .dataTables_filter{
     margin-bottom: 10px;
